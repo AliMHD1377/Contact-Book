@@ -1,6 +1,9 @@
 # به نام خدا
 # author: AliMHD
 
+from tabulate import tabulate
+
+
 class ContactBook:
     """
     A class used to represent a Contact Book.
@@ -22,12 +25,11 @@ class ContactBook:
         """
         Displays all contacts in the contact book.
         """
+        table = []
         for name, info in self.contacts.items():
-            print("Name:", name)
-            print("Phone:", info['phone'])
-            print("Email:", info['email'])
-            print("Address:", info['address'])
-            print("-----------------------")
+            table.append([name, info["phone"], info["email"], info["address"]])
+        headers = ["Name", "Phone", "Email", "Address"]
+        print(tabulate(table, headers=headers, tablefmt="fancy_grid"))
 
     def delete_contact(self, name: str):
         if name in self.contacts:
@@ -47,18 +49,27 @@ class ContactBook:
             print("Contact updated successfully!")
             return
         print("Contact not found")
+    
+    
 
 
 if __name__ == "__main__":
     book = ContactBook()
 
+    def show_menu():
+        menu = [
+            ["1", "Add contact"],
+            ["2", "Edit contact"],
+            ["3", "View contacts"],
+            ["4", "Delete contact"],
+            ["5", "Quit"],
+        ]
+
+        print(tabulate(menu, headers=["Option", "Description"], tablefmt="rounded_grid"))
+
     while True:
         print("\n--- Contact Book Application ---")
-        print("1. Add contact")
-        print("2. Edit contact")
-        print("3. View contacts")
-        print("4. Delete contact")
-        print("5. Quit")
+        show_menu()
         user_choice = input("\nPlease choose an option: ")
 
         if user_choice == '1':
